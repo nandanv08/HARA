@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
 import { WishlistProvider } from './context/WishlistContext'
@@ -17,6 +18,7 @@ import Checkout      from './pages/Checkout'
 import OrderSuccess  from './pages/OrderSuccess'
 import TrackOrder    from './pages/TrackOrder'
 import ContactUs     from './pages/ContactUs'
+import SplashScreen  from './components/SplashScreen'
 
 function Layout({ children }) {
   return (
@@ -31,9 +33,13 @@ function Layout({ children }) {
 }
 
 export default function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
   return (
-    <BrowserRouter>
-      <CartProvider>
+    <>
+      {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
+      <BrowserRouter>
+        <CartProvider>
         <WishlistProvider>
           <ToastProvider>
             <Layout>
@@ -53,5 +59,6 @@ export default function App() {
         </WishlistProvider>
       </CartProvider>
     </BrowserRouter>
+    </>
   )
 }

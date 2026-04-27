@@ -94,27 +94,29 @@ OrderSchema.pre('save', function(next) {
 const Order = mongoose.model('Order', OrderSchema);
 
 // ══════════════════════════════════════════════════════════════
-//  SEED DATA — inserts demo products if collection is empty
+//  SEED DATA — inserts products if collection is empty
 // ══════════════════════════════════════════════════════════════
 const seedProducts = async() => {
-    const count = await Product.countDocuments();
-    if (count > 0) return;
+    // One-time cleanup: delete all old products
+    await Product.deleteMany({});
+
     const demos = [
-        { name: 'Lunar Crescent Drops', price: 899, originalPrice: 1199, category: 'earrings', badge: 'Bestseller', featured: true, inStock: true, images: ['https://images.unsplash.com/photo-1630019852942-f89202989a59?w=600'], description: 'Handcrafted fabric earrings inspired by the moon cycle. Light as a feather, stunning as starlight.' },
-        { name: 'Golden Petal Studs', price: 649, originalPrice: 849, category: 'earrings', badge: 'New', featured: true, inStock: true, images: ['https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=600'], description: 'Delicate petal-shaped studs wrapped in gold thread. Perfect for every occasion.' },
-        { name: 'Chakra Circle Hoops', price: 1099, category: 'earrings', badge: 'New', featured: true, inStock: true, images: ['https://images.unsplash.com/photo-1635767798638-3e25273a8236?w=600'], description: 'Sacred geometry meets fashion. These geometric hoops carry ancient symbolism.' },
-        { name: 'Madhubani Drop Earrings', price: 799, originalPrice: 999, category: 'earrings', badge: 'Sale', featured: false, inStock: true, images: ['https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=600'], description: 'Inspired by the folk art of Bihar. Each pair is hand-painted and unique.' },
-        { name: 'Hara Signature Set', price: 2499, originalPrice: 3299, category: 'sets', badge: 'Bestseller', featured: true, inStock: true, images: ['https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600'], description: 'Our flagship earring and necklace set. The ultimate Hara experience.' },
-        { name: 'Forest Mist Drops', price: 749, category: 'earrings', featured: false, inStock: true, images: ['https://images.unsplash.com/photo-1576022162028-5a04ad879085?w=600'], description: 'Earthy tones meet elegant form. Channel the energy of the forest.' },
-        { name: 'Lotus Thread Necklace', price: 1299, originalPrice: 1699, category: 'necklaces', badge: 'New', featured: true, inStock: true, images: ['https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600'], description: 'A lotus motif in gold thread — symbol of purity and new beginnings.' },
-        { name: 'Woven Moon Ring', price: 549, category: 'rings', featured: false, inStock: true, images: ['https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600'], description: 'Adjustable fabric ring with crescent moon charm. Minimalist and magical.' },
-        { name: 'Rose Lotus Heritage Fabric Earrings', price: 489, originalPrice: 749, category: 'earrings', badge: 'New', featured: true, inStock: true, images: ['/products/rose_lotus_heritage.jpg'], description: 'Handcrafted pink fabric earrings with intricate silver-toned lotus studs and traditional charms. A perfect blend of contemporary color and heritage soul.' },
-        { name: 'Ajrakh Midnight Lotus Danglers', price: 569, originalPrice: 849, category: 'earrings', badge: 'New', featured: true, inStock: true, images: ['/products/ajrakh_midnight_lotus.jpg'], description: 'Traditional Ajrakh block-print fabric earrings featuring silver-toned lotus tops and cascading coin-style charms for a bohemian luxury look.' },
-        { name: 'Blush Pink Lotus Rectangular Earrings', price: 799, originalPrice: 1099, category: 'earrings', badge: 'New', featured: true, inStock: true, images: ['/products/pink_lotus_new.jpg'], description: 'Elegant blush pink rectangular fabric earrings featuring delicate silver-toned lotus motifs. Handcrafted with love by Neha ♥️' },
-        { name: 'Ajrakh Crimson Diamond Coin Earrings', price: 899, originalPrice: 1299, category: 'earrings', badge: 'New', featured: true, inStock: true, images: ['/products/ajrakh_crimson_new.jpg'], description: 'Traditional Ajrakh crimson fabric earrings with diamond silhouettes and rustic silver coin charms. Handcrafted with love by Neha ♥️' }
+        { name: 'Indigo Floral Ghungroo Drops', price: 799, originalPrice: 1099, category: 'earrings', badge: 'New', featured: true, inStock: true, images: ['/products/indigo_floral_ghungroo_drops.jpg'], description: 'Stunning indigo blue round fabric earrings with delicate floral block-print and silver-toned ghungroo beading. A perfect fusion of tradition and elegance. Handcrafted with love by Neha ♥️' },
+        { name: 'Red Heart Ghungroo Earrings', price: 850, originalPrice: 1199, category: 'earrings', badge: 'Bestseller', featured: true, inStock: true, images: ['/products/red_heart_ghungroo_earrings.jpg'], description: 'Bold red heart-shaped fabric earrings adorned with intricate patterns and silver ghungroo beading. A statement piece that speaks of love and artistry. Handcrafted with love by Neha ♥️' },
+        { name: 'Olive Lotus Hexagon Drops', price: 699, originalPrice: 999, category: 'earrings', badge: 'New', featured: true, inStock: true, images: ['/products/olive_lotus_hexagon_drops.jpg'], description: 'Elegant olive green hexagonal fabric earrings with silver lotus tops and delicate ghungroo detailing. Earthy sophistication meets heritage craftsmanship. Handcrafted with love by Neha ♥️' },
+        { name: 'Turquoise Tulip Coin Danglers', price: 799, originalPrice: 1099, category: 'earrings', badge: 'New', featured: true, inStock: true, images: ['/products/turquoise_tulip_coin_danglers.jpg'], description: 'Vibrant turquoise fabric round earrings with pink tulip print and cascading antique silver coin charms on kidney-wire hooks. Bohemian elegance at its finest. Handcrafted with love by Neha ♥️' },
+        { name: 'Turquoise Tulip Collection Set', price: 850, originalPrice: 1299, category: 'sets', badge: 'Bestseller', featured: true, inStock: true, images: ['/products/turquoise_tulip_collection.jpg'], description: 'An exquisite trio of turquoise tulip-print fabric earrings — coin danglers, ghungroo studs, and ornate jhumka drops. The ultimate Hara collection for every mood. Handcrafted with love by Neha ♥️' },
+        { name: 'Tulip Elephant Jhumka Drops', price: 850, originalPrice: 1199, category: 'earrings', badge: 'New', featured: true, inStock: true, images: ['/products/tulip_elephant_jhumka_drops.jpg'], description: 'Vibrant turquoise tulip-print fabric studs paired with ornate antique silver elephant jhumka danglers. A bold fusion of floral charm and tribal artistry. Handcrafted with love by Neha ♥️' },
+        { name: 'Indigo Hexagon Lotus Jhumkas', price: 799, originalPrice: 1099, category: 'earrings', badge: 'Bestseller', featured: true, inStock: true, images: ['/products/indigo_hexagon_lotus_jhumkas.jpg'], description: 'Deep indigo hexagonal fabric earrings with white floral mandala print, silver lotus tops, and delicate filigree jhumka drops. Timeless heritage elegance. Handcrafted with love by Neha ♥️' },
+        { name: 'Pink Ikat Chandbali Drops', price: 699, originalPrice: 999, category: 'earrings', badge: 'New', featured: true, inStock: true, images: ['/products/pink_ikat_chandbali_drops.jpg'], description: 'Stunning pink ikat-print half-moon fabric earrings with ornate silver mandala chandbali drops and ghungroo detailing. A show-stopping statement piece. Handcrafted with love by Neha ♥️' },
+        { name: 'Ajrakh Mandala Coin Jhumkas', price: 850, originalPrice: 1199, category: 'earrings', badge: 'Sale', featured: true, inStock: true, images: ['/products/ajrakh_mandala_coin_jhumkas.jpg'], description: 'Traditional Ajrakh block-print round fabric earrings with intricate mandala patterns, silver coin charms, and mini jhumka drops. Rich heritage in every detail. Handcrafted with love by Neha ♥️' },
+        { name: 'Tulip Ghungroo Hexagon Studs', price: 699, originalPrice: 999, category: 'earrings', badge: 'New', featured: true, inStock: true, images: ['/products/tulip_ghungroo_hexagon_studs.jpg'], description: 'Charming turquoise tulip-print hexagonal fabric studs with silver-toned sunflower tops and delicate ghungroo beading. Everyday elegance redefined. Handcrafted with love by Neha ♥️' },
+        { name: 'Mustard Diamond Coin Jhumkas', price: 850, originalPrice: 1199, category: 'earrings', badge: 'Bestseller', featured: true, inStock: true, images: ['/products/mustard_diamond_coin_jhumkas.jpg'], description: 'Vibrant mustard yellow diamond-shaped fabric earrings with silver sunflower studs, antique coin charms, and ornate filigree jhumka drops. Bold and beautiful. Handcrafted with love by Neha ♥️' },
+        { name: 'Pink Lotus Rectangle Jhumkas', price: 699, originalPrice: 999, category: 'earrings', badge: 'New', featured: true, inStock: true, images: ['/products/pink_lotus_rectangle_jhumkas.jpg'], description: 'Delicate pink rectangular fabric earrings with silver lotus tops and intricate floral jhumka drops. Sweet, feminine, and full of charm. Handcrafted with love by Neha ♥️' },
+        { name: 'Kalamkari Paisley Lotus Drops', price: 799, originalPrice: 1099, category: 'earrings', badge: 'New', featured: true, inStock: true, images: ['/products/kalamkari_paisley_lotus_drops.jpg'], description: 'Traditional red and black Kalamkari paisley fabric earrings with silver lotus tops and cascading coin charms. A masterpiece of Indian folk art. Handcrafted with love by Neha ♥️' }
     ];
     await Product.insertMany(demos);
-    console.log(`🌱  Seeded ${demos.length} demo products`);
+    console.log(`🌱  Seeded ${demos.length} new products`);
 };
 
 // ══════════════════════════════════════════════════════════════
@@ -368,3 +370,5 @@ mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 8000 })
     });
 
 process.on('SIGTERM', () => mongoose.disconnect().then(() => process.exit(0)));
+
+// Server successfully restarted
