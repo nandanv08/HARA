@@ -6,7 +6,7 @@ export default function HeroSlider() {
       {/* Background Image Container */}
       <div className="absolute inset-0 w-full h-full animate-fade-in">
         <img
-          src="/slider/hero_banner.jpg"
+          src="/hero_banner.jpg"
           alt="Hara Jewellery Collection"
           className="w-full h-full object-cover object-center animate-ken-burns origin-center"
         />

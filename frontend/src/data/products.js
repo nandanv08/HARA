@@ -54,7 +54,7 @@ export const FALLBACK_PRODUCTS = [
     _id: '5',
     name: 'Turquoise Tulip Collection Set',
     description: 'An exquisite trio of turquoise tulip-print fabric earrings — coin danglers, ghungroo studs, and ornate jhumka drops. The ultimate Hara collection for every mood. Handcrafted with love by Neha ♥️',
-    price: 850,
+    price: 1499,
     originalPrice: 1299,
     category: 'sets',
     badge: 'Bestseller',
