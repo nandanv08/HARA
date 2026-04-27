@@ -4,13 +4,13 @@ import axios from 'axios'
 import ProductCard from '../components/ProductCard'
 import { FALLBACK_PRODUCTS, CATEGORIES } from '../data/products'
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:5001'
+const API = import.meta.env.VITE_API_URL || 'https://hara-production-74fb.up.railway.app'
 
 const SORT_OPTIONS = [
-  { value: 'default',     label: 'Featured' },
-  { value: 'price_asc',   label: 'Price: Low to High' },
-  { value: 'price_desc',  label: 'Price: High to Low' },
-  { value: 'newest',      label: 'Newest First' },
+  { value: 'default', label: 'Featured' },
+  { value: 'price_asc', label: 'Price: Low to High' },
+  { value: 'price_desc', label: 'Price: High to Low' },
+  { value: 'newest', label: 'Newest First' },
 ]
 
 export default function Shop() {
@@ -18,11 +18,11 @@ export default function Shop() {
   const categoryParam = searchParams.get('category') || 'all'
   const queryParam = searchParams.get('q') || ''
 
-  const [products, setProducts]   = useState([])
-  const [loading, setLoading]     = useState(true)
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState(categoryParam)
-  const [sort, setSort]           = useState('default')
-  const [search, setSearch]       = useState(queryParam)
+  const [sort, setSort] = useState('default')
+  const [search, setSearch] = useState(queryParam)
 
   // Fetch products from API
   useEffect(() => {
@@ -54,9 +54,9 @@ export default function Shop() {
     .filter(p => activeTab === 'all' || p.category === activeTab)
     .filter(p => !search || p.name.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => {
-      if (sort === 'price_asc')  return a.price - b.price
+      if (sort === 'price_asc') return a.price - b.price
       if (sort === 'price_desc') return b.price - a.price
-      if (sort === 'newest')     return new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
+      if (sort === 'newest') return new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
       return 0
     })
 
@@ -81,11 +81,10 @@ export default function Shop() {
             <button
               key={cat.id}
               onClick={() => handleCategory(cat.id)}
-              className={`px-6 py-3 text-[11px] font-semibold tracking-[2.5px] uppercase transition-all duration-300 ${
-                activeTab === cat.id
+              className={`px-6 py-3 text-[11px] font-semibold tracking-[2.5px] uppercase transition-all duration-300 ${activeTab === cat.id
                   ? 'bg-charcoal text-white shadow-lg'
                   : 'bg-white border border-charcoal/10 text-charcoal/70 hover:border-gold hover:text-gold shadow-sm hover:shadow-md'
-              }`}
+                }`}
             >
               {cat.label}
             </button>
@@ -95,7 +94,7 @@ export default function Shop() {
         {/* ── Search + sort bar */}
         <div className="flex flex-col sm:flex-row gap-4 mb-10">
           <div className="relative flex-1 max-w-xs">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-charcoal/30" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-charcoal/30" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
             <input
               type="text"
               placeholder="Search jewellery..."

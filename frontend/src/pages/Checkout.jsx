@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useCart } from '../context/CartContext'
 import { useToast } from '../components/Toast'
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:5001'
+const API = import.meta.env.VITE_API_URL || 'https://hara-production-74fb.up.railway.app'
 const RZP_KEY = import.meta.env.VITE_RAZORPAY_KEY_ID || ''
 
 // Input field component — defined outside Checkout to maintain stable identity across re-renders
@@ -18,9 +18,8 @@ function Field({ name, label, type = 'text', placeholder, half, value, onChange,
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className={`w-full border px-5 py-3.5 text-base bg-white focus:outline-none transition-colors ${
-          error ? 'border-red-400' : 'border-charcoal/15 focus:border-gold'
-        }`}
+        className={`w-full border px-5 py-3.5 text-base bg-white focus:outline-none transition-colors ${error ? 'border-red-400' : 'border-charcoal/15 focus:border-gold'
+          }`}
       />
       {error && <p className="text-red-400 text-xs mt-1">{error}</p>}
     </div>
@@ -48,12 +47,12 @@ export default function Checkout() {
   // Validate form
   const validate = () => {
     const errs = {}
-    if (!form.name.trim())    errs.name    = 'Name is required'
+    if (!form.name.trim()) errs.name = 'Name is required'
     if (!form.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) errs.email = 'Valid email required'
-    if (!form.phone.match(/^[6-9]\d{9}$/))               errs.phone = 'Valid 10-digit Indian mobile number'
+    if (!form.phone.match(/^[6-9]\d{9}$/)) errs.phone = 'Valid 10-digit Indian mobile number'
     if (!form.address.trim()) errs.address = 'Address is required'
-    if (!form.pincode.match(/^\d{6}$/))                  errs.pincode = 'Valid 6-digit pincode'
-    if (!form.city.trim())    errs.city    = 'City is required'
+    if (!form.pincode.match(/^\d{6}$/)) errs.pincode = 'Valid 6-digit pincode'
+    if (!form.city.trim()) errs.city = 'City is required'
     return errs
   }
 
@@ -73,16 +72,16 @@ export default function Checkout() {
       })
 
       const razorpayOptions = {
-        key:         order.key_id || RZP_KEY,
-        amount:      order.amount,
-        currency:    order.currency,
-        name:        'Hara Jewellery',
+        key: order.key_id || RZP_KEY,
+        amount: order.amount,
+        currency: order.currency,
+        name: 'Hara Jewellery',
         description: `${cart.length} item(s) — Handcrafted with Love`,
-        image:       '/hara_logo.jpg',
-        order_id:    order.id,
+        image: '/hara_logo.jpg',
+        order_id: order.id,
         prefill: {
-          name:    form.name,
-          email:   form.email,
+          name: form.name,
+          email: form.email,
           contact: form.phone,
         },
         notes: {
@@ -94,20 +93,20 @@ export default function Checkout() {
           // STEP 2: Verify payment on backend
           try {
             const { data: verify } = await axios.post(`${API}/api/orders/verify-payment`, {
-              razorpay_order_id:   response.razorpay_order_id,
+              razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature:  response.razorpay_signature,
+              razorpay_signature: response.razorpay_signature,
               customer: {
-                name:    form.name,
-                email:   form.email,
-                phone:   form.phone,
+                name: form.name,
+                email: form.email,
+                phone: form.phone,
                 address: `${form.address}, ${form.city} - ${form.pincode}`,
                 pincode: form.pincode,
               },
               items: cart.map(i => ({
                 id: i._id, name: i.name, price: i.price, qty: i.qty, img: i.images?.[0]
               })),
-              total:    cartTotal,
+              total: cartTotal,
               shipping: shipping,
             })
 
@@ -115,12 +114,12 @@ export default function Checkout() {
               clearCart()
               navigate('/order-success', {
                 state: {
-                  orderId:         verify.orderId,
+                  orderId: verify.orderId,
                   razorpayOrderId: response.razorpay_order_id,
-                  paymentId:       response.razorpay_payment_id,
-                  total:           cartTotal,
-                  customerName:    form.name,
-                  customerEmail:   form.email,
+                  paymentId: response.razorpay_payment_id,
+                  total: cartTotal,
+                  customerName: form.name,
+                  customerEmail: form.email,
                 }
               })
             } else {
@@ -179,12 +178,12 @@ export default function Checkout() {
           <div className="bg-white p-10 space-y-8 shadow-sm">
             <h2 className="font-display text-3xl text-charcoal">Shipping Details</h2>
             <div className="grid grid-cols-2 gap-5">
-              <Field name="name"    label="Full Name"     placeholder="Priya Sharma"           half value={form.name}    onChange={handleChange} error={errors.name} />
-              <Field name="email"   label="Email"         placeholder="priya@email.com" type="email" half value={form.email}   onChange={handleChange} error={errors.email} />
-              <Field name="phone"   label="Mobile Number" placeholder="8123455682"              half value={form.phone}   onChange={handleChange} error={errors.phone} />
-              <Field name="pincode" label="Pincode"       placeholder="400001"                  half value={form.pincode} onChange={handleChange} error={errors.pincode} />
-              <Field name="address" label="Address"       placeholder="House no, Street, Area"       value={form.address} onChange={handleChange} error={errors.address} />
-              <Field name="city"    label="City"          placeholder="Mumbai"                  half value={form.city}    onChange={handleChange} error={errors.city} />
+              <Field name="name" label="Full Name" placeholder="Priya Sharma" half value={form.name} onChange={handleChange} error={errors.name} />
+              <Field name="email" label="Email" placeholder="priya@email.com" type="email" half value={form.email} onChange={handleChange} error={errors.email} />
+              <Field name="phone" label="Mobile Number" placeholder="8123455682" half value={form.phone} onChange={handleChange} error={errors.phone} />
+              <Field name="pincode" label="Pincode" placeholder="400001" half value={form.pincode} onChange={handleChange} error={errors.pincode} />
+              <Field name="address" label="Address" placeholder="House no, Street, Area" value={form.address} onChange={handleChange} error={errors.address} />
+              <Field name="city" label="City" placeholder="Mumbai" half value={form.city} onChange={handleChange} error={errors.city} />
             </div>
 
             {/* Payment info */}
@@ -245,11 +244,10 @@ export default function Checkout() {
             <button
               onClick={handlePay}
               disabled={loading}
-              className={`w-full py-5 text-[13px] font-bold tracking-[3px] uppercase transition-all duration-300 flex items-center justify-center gap-3 shadow-lg ${
-                loading
-                  ? 'bg-gold/70 text-white cursor-wait shadow-gold/20'
-                  : 'bg-charcoal text-white hover:bg-gold shadow-charcoal/15 hover:shadow-gold/20'
-              }`}
+              className={`w-full py-5 text-[13px] font-bold tracking-[3px] uppercase transition-all duration-300 flex items-center justify-center gap-3 shadow-lg ${loading
+                ? 'bg-gold/70 text-white cursor-wait shadow-gold/20'
+                : 'bg-charcoal text-white hover:bg-gold shadow-charcoal/15 hover:shadow-gold/20'
+                }`}
             >
               {loading ? (
                 <>
@@ -258,7 +256,7 @@ export default function Checkout() {
                 </>
               ) : (
                 <>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1" y="4" width="22" height="16" rx="2" /><line x1="1" y1="10" x2="23" y2="10" /></svg>
                   Pay ₹{cartTotal.toLocaleString()} Securely
                 </>
               )}
@@ -266,7 +264,7 @@ export default function Checkout() {
 
             {/* WhatsApp fallback */}
             <a
-              href={`https://wa.me/918123455682?text=Hi! I'd like to place an order.%0A%0AItems:%0A${cart.map(i=>`- ${i.name} x${i.qty} = ₹${i.price*i.qty}`).join('%0A')}%0A%0ATotal: ₹${cartTotal}`}
+              href={`https://wa.me/918123455682?text=Hi! I'd like to place an order.%0A%0AItems:%0A${cart.map(i => `- ${i.name} x${i.qty} = ₹${i.price * i.qty}`).join('%0A')}%0A%0ATotal: ₹${cartTotal}`}
               target="_blank"
               rel="noopener noreferrer"
               className="block w-full py-4 text-center border border-[#25D366] text-[#25D366] text-[12px] font-semibold tracking-[2px] uppercase hover:bg-[#25D366] hover:text-white transition-colors"

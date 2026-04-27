@@ -5,7 +5,7 @@ import ProductCard from '../components/ProductCard'
 import HeroSlider from '../components/HeroSlider'
 import { FALLBACK_PRODUCTS } from '../data/products'
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:5001'
+const API = import.meta.env.VITE_API_URL || 'https://hara-production-74fb.up.railway.app'
 
 
 // ── Testimonial card
@@ -14,7 +14,7 @@ function Testimonial({ name, city, text, stars = 5 }) {
     <div className="bg-cream p-7 space-y-4">
       <div className="flex gap-1">
         {Array(stars).fill(0).map((_, i) => (
-          <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill="#C9A96E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill="#C9A96E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
         ))}
       </div>
       <p className="font-display text-xl font-light text-charcoal leading-relaxed italic">"{text}"</p>
@@ -122,7 +122,7 @@ export default function Home() {
       <section className="bg-charcoal text-center px-6 lg:px-20 py-24 md:py-32">
         <div className="max-w-4xl mx-auto space-y-8">
           <h2 className="font-display text-[clamp(28px,4vw,40px)] font-light text-white leading-relaxed">
-            Crafted to be Worn.<br/><em className="italic text-gold">Designed to be Remembered.</em>
+            Crafted to be Worn.<br /><em className="italic text-gold">Designed to be Remembered.</em>
           </h2>
           <p className="font-body text-white/70 text-base md:text-lg leading-loose font-light max-w-3xl mx-auto">
             At Hara Jewellery, every creation is an ode to refined craftsmanship and timeless elegance. Meticulously handcrafted, each piece embodies a seamless fusion of heritage artistry and contemporary sophistication. Designed for the discerning eye, our jewellery transcends mere adornment—becoming an intimate expression of individuality, grace, and quiet luxury. Every detail is intentional, every design a statement, crafted to be cherished beyond seasons.
@@ -140,10 +140,10 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
             {[
-              { icon: '🌿', title: 'Handcrafted',   desc: 'Every piece is made by skilled artisans with love and attention to detail.' },
-              { icon: '✦',  title: 'Sacred Design', desc: 'Inspired by Indian sacred geometry and folk art traditions.' },
-              { icon: '📦', title: 'Free Shipping',  desc: 'Complimentary shipping on all orders above ₹2000 across India.' },
-              { icon: '↩',  title: 'Easy Returns',   desc: '7-day hassle-free return policy. Your satisfaction guaranteed.' },
+              { icon: '🌿', title: 'Handcrafted', desc: 'Every piece is made by skilled artisans with love and attention to detail.' },
+              { icon: '✦', title: 'Sacred Design', desc: 'Inspired by Indian sacred geometry and folk art traditions.' },
+              { icon: '📦', title: 'Free Shipping', desc: 'Complimentary shipping on all orders above ₹2000 across India.' },
+              { icon: '↩', title: 'Easy Returns', desc: '7-day hassle-free return policy. Your satisfaction guaranteed.' },
             ].map(f => (
               <div key={f.title} className="text-center space-y-5 bg-white p-10 hover:-translate-y-2 transition-transform duration-500 shadow-sm hover:shadow-xl hover:shadow-charcoal/5">
                 <div className="text-4xl">{f.icon}</div>
@@ -162,9 +162,9 @@ export default function Home() {
           <h2 className="font-display text-[clamp(36px,4vw,54px)] font-light text-charcoal">What They Say</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Testimonial name="Priya Sharma"    city="Mumbai"    text="The lunar crescent drops are absolutely stunning. I get compliments every time I wear them. The quality is exceptional for the price!" />
+          <Testimonial name="Priya Sharma" city="Mumbai" text="The lunar crescent drops are absolutely stunning. I get compliments every time I wear them. The quality is exceptional for the price!" />
           <Testimonial name="Ananya Krishnan" city="Bangalore" text="Ordered the signature set as a gift. The packaging was gorgeous and my friend was over the moon. Will definitely order again." />
-          <Testimonial name="Deepika Nair"    city="Chennai"   text="These earrings are so lightweight — I forget I'm wearing them. Finally, beautiful jewellery that doesn't hurt my ears!" />
+          <Testimonial name="Deepika Nair" city="Chennai" text="These earrings are so lightweight — I forget I'm wearing them. Finally, beautiful jewellery that doesn't hurt my ears!" />
         </div>
       </section>
 
@@ -183,7 +183,7 @@ export default function Home() {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-3 border border-gold/40 text-gold px-8 py-3.5 text-[11px] tracking-[3px] uppercase hover:bg-gold hover:text-white transition-all duration-300"
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" /></svg>
           Follow on Instagram
         </a>
       </section>

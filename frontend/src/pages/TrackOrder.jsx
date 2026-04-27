@@ -15,8 +15,8 @@ export default function TrackOrder() {
     setError('')
     setOrders(null)
     try {
-      const res = await fetch(`http://localhost:5001/api/orders/track?q=${encodeURIComponent(query.trim())}`)
-      const data = await res.json()
+      const API = import.meta.env.VITE_API_URL;
+      fetch(`${API}/api/orders`); const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Failed to find orders')
       setOrders(data.orders || [])
     } catch (err) {
@@ -40,14 +40,14 @@ export default function TrackOrder() {
       </div>
 
       <form onSubmit={handleTrack} className="max-w-xl mx-auto mb-16 relative">
-        <input 
-          type="text" 
+        <input
+          type="text"
           value={query}
           onChange={e => setQuery(e.target.value)}
           placeholder="Order ID or Mobile Number"
           className="w-full border-b-2 border-charcoal/20 py-4 pl-4 pr-32 font-body text-lg focus:border-gold outline-none transition-colors placeholder:text-charcoal/30 bg-transparent"
         />
-        <button 
+        <button
           type="submit"
           disabled={loading || !query.trim()}
           className="absolute right-0 top-1/2 -translate-y-1/2 bg-charcoal text-white font-body font-medium text-[11px] tracking-[2px] uppercase px-8 py-3 hover:bg-gold transition-colors disabled:opacity-50"
@@ -68,12 +68,12 @@ export default function TrackOrder() {
             orders.map(order => {
               const currentStepIndex = getStepIndex(order.status)
               const isCancelled = currentStepIndex === -1
-              
+
               return (
                 <div key={order._id} className="border border-charcoal/10 rounded-2xl p-8 bg-white shadow-sm overflow-hidden relative">
                   {/* Status Banner */}
                   <div className="absolute top-0 left-0 w-full h-1.5 bg-gold" />
-                  
+
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 pb-8 border-b border-charcoal/10">
                     <div>
                       <p className="text-[11px] font-medium tracking-[2px] uppercase text-gold mb-2">Order #{order.razorpayOrderId?.slice(-8) || order._id.slice(-8)}</p>
@@ -91,10 +91,10 @@ export default function TrackOrder() {
                   <div className="mb-10 flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
                     {order.items.map((item, i) => (
                       <div key={i} className="flex-shrink-0 w-20 h-20 bg-charcoal/5 rounded-md overflow-hidden relative group">
-                         <img src={item.img} alt={item.name} className="w-full h-full object-cover" onError={e => { e.target.src = 'https://via.placeholder.com/80?text=H' }} />
-                         <div className="absolute hidden group-hover:flex inset-0 bg-charcoal/80 text-white text-[10px] items-center justify-center text-center p-2 font-medium">
-                           {item.qty}x
-                         </div>
+                        <img src={item.img} alt={item.name} className="w-full h-full object-cover" onError={e => { e.target.src = 'https://via.placeholder.com/80?text=H' }} />
+                        <div className="absolute hidden group-hover:flex inset-0 bg-charcoal/80 text-white text-[10px] items-center justify-center text-center p-2 font-medium">
+                          {item.qty}x
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -105,9 +105,9 @@ export default function TrackOrder() {
                       <div className="min-w-[500px]">
                         {/* Line connecting steps */}
                         <div className="absolute top-7 left-[5%] right-[5%] h-0.5 bg-charcoal/10" />
-                        <div 
-                          className="absolute top-7 left-[5%] h-0.5 bg-gold transition-all duration-700" 
-                          style={{ width: `${(Math.max(0, currentStepIndex) / (STATUS_STEPS.length - 1)) * 90}%` }} 
+                        <div
+                          className="absolute top-7 left-[5%] h-0.5 bg-gold transition-all duration-700"
+                          style={{ width: `${(Math.max(0, currentStepIndex) / (STATUS_STEPS.length - 1)) * 90}%` }}
                         />
 
                         <div className="flex justify-between relative z-10">
@@ -116,9 +116,8 @@ export default function TrackOrder() {
                             const isCurrent = i === currentStepIndex
                             return (
                               <div key={step} className="flex flex-col items-center gap-3 w-20">
-                                <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-colors duration-500 ${
-                                  isCompleted ? 'bg-gold text-white shadow-md' : 'bg-white border-2 border-charcoal/20 text-transparent'
-                                }`}>
+                                <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-colors duration-500 ${isCompleted ? 'bg-gold text-white shadow-md' : 'bg-white border-2 border-charcoal/20 text-transparent'
+                                  }`}>
                                   {isCompleted && <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12"></polyline></svg>}
                                 </div>
                                 <span className={`text-[10px] font-medium tracking-[1.5px] uppercase text-center ${isCurrent ? 'text-charcoal font-bold' : 'text-charcoal/40'}`}>
