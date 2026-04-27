@@ -5,7 +5,7 @@ import ProductCard from '../components/ProductCard'
 import HeroSlider from '../components/HeroSlider'
 import { FALLBACK_PRODUCTS } from '../data/products'
 
-const API = import.meta.env.VITE_API_URL || 'https://hara-production-74fb.up.railway.app'
+const API = import.meta.env.VITE_API_URL;
 
 
 // ── Testimonial card
