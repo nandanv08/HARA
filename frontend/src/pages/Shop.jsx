@@ -4,7 +4,7 @@ import axios from 'axios'
 import ProductCard from '../components/ProductCard'
 import { FALLBACK_PRODUCTS, CATEGORIES } from '../data/products'
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || '';
 
 const SORT_OPTIONS = [
   { value: 'default', label: 'Featured' },

@@ -15,7 +15,7 @@ export default function TrackOrder() {
     setError('')
     setOrders(null)
     try {
-      const API = import.meta.env.VITE_API_URL;
+      const API = import.meta.env.VITE_API_URL || '';
       const res = await fetch(`${API}/api/orders/track?q=${encodeURIComponent(query.trim())}`);
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Failed to find orders')

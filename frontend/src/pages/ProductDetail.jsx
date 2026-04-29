@@ -6,7 +6,7 @@ import { useWishlist } from '../context/WishlistContext'
 import { useToast } from '../components/Toast'
 import { FALLBACK_PRODUCTS } from '../data/products'
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || '';
 
 export default function ProductDetail() {
   const { id } = useParams()

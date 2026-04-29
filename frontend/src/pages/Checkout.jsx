@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useCart } from '../context/CartContext'
 import { useToast } from '../components/Toast'
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || '';
 const RZP_KEY = import.meta.env.VITE_RAZORPAY_KEY_ID || ''
 
 // Input field component — defined outside Checkout to maintain stable identity across re-renders
