@@ -124,6 +124,10 @@ app.get('/health', (req, res) =>
     res.json({ status: 'ok', service: 'Hara Jewellery API v2', time: new Date().toISOString() })
 );
 
+app.get("/", (req, res) => {
+  res.send("API running");
+});
+
 // ────────────────────────────────────────────────────────────────
 //  PRODUCTS
 // ────────────────────────────────────────────────────────────────
