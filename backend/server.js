@@ -13,7 +13,7 @@ import Razorpay from "razorpay";
 console.log('MONGO_URI:', process.env.MONGO_URI);
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 
 // ── Razorpay client ──────────────────────────────────────────────
 const razorpay = new Razorpay({
@@ -351,13 +351,7 @@ mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 8000 })
         console.log('✅  MongoDB connected');
         await seedProducts();
         app.listen(PORT, () => {
-            console.log(`Server listen on port ${PORT} successful`);
-            console.log(`\n🌸  Hara Jewellery Backend  →  http://localhost:${PORT}`);
-            console.log(`    Key: ${(process.env.RAZORPAY_KEY_ID||'(not set)').slice(0,16)}...`);
-            console.log('\n    GET   /api/products');
-            console.log('    POST  /api/orders/create-razorpay-order');
-            console.log('    POST  /api/orders/verify-payment');
-            console.log('    GET   /api/orders\n');
+          console.log(`Server running on port ${PORT}`);
         });
     })
     .catch(err => {
