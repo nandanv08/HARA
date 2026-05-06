@@ -13,7 +13,7 @@ import Razorpay from "razorpay";
 console.log('MONGO_URI:', process.env.MONGO_URI);
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // ── Razorpay client ──────────────────────────────────────────────
 const razorpay = new Razorpay({
@@ -353,7 +353,7 @@ app.use((err, req, res, next) => {
 mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 8000 })
     .then(async() => {
         console.log('✅  MongoDB connected');
-        await seedProducts();
+        // await seedProducts(); // temporarily disabled — Railway may timeout while seeding
         app.listen(PORT, () => {
           console.log(`Server running on port ${PORT}`);
         });
