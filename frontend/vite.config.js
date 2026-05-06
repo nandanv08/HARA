@@ -7,7 +7,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'https://hara-production-74fb.up.railway.app',
+        target: 'https://hara-production-607f.up.railway.app',
         changeOrigin: true
       }
     }
