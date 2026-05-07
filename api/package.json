@@ -1,0 +1,14 @@
+{
+    "name": "hara-jewellery-api",
+    "version": "2.0.0",
+    "type": "module",
+    "description": "Hara Jewellery — Vercel Serverless API",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.6.1",
+        "express": "^4.19.2",
+        "mongoose": "^8.4.0",
+        "razorpay": "^2.9.2",
+        "serverless-http": "^3.2.0"
+    }
+}
