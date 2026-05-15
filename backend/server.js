@@ -214,8 +214,13 @@ app.post('/api/orders/create-razorpay-order', async(req, res) => {
             key_id: process.env.RAZORPAY_KEY_ID
         });
     } catch (err) {
-        console.error('[create-razorpay-order]', err.message);
-        res.status(500).json({ error: 'Failed to create Razorpay order', detail: err.message });
+        console.error('[create-razorpay-order] Full error:', JSON.stringify(err, null, 2));
+        console.error('[create-razorpay-order] Message:', err.message);
+        console.error('[create-razorpay-order] Status:', err.statusCode);
+        res.status(500).json({ 
+            error: 'Failed to create Razorpay order', 
+            detail: err.message || err.error?.description || JSON.stringify(err)
+        });
     }
 });
 
